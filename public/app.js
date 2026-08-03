@@ -117,7 +117,6 @@ async function loadHomeGroups() {
 }
 
 function groupCardHtml(g) {
-  const pct = g.maxMembers ? Math.round((g.memberCount / g.maxMembers) * 100) : 0;
   const full = g.status === 'FULL';
   return `
   <div class="group-card" data-group-id="${g.id}">
@@ -339,7 +338,6 @@ function bookmarks() {
 }
 
 function bookmarkCardHtml(g) {
-  const pct = g.maxMembers ? Math.round((g.memberCount / g.maxMembers) * 100) : 0;
   return `
   <div class="bookmark-card" data-group-id="${g.id}">
     <div class="bk-subject">${esc(g.subjectIcon)}</div>
@@ -379,14 +377,16 @@ $('#myCheckBtn').addEventListener('click', doMembershipCheck);
 $('#myEmail').addEventListener('keydown', (e) => { if (e.key === 'Enter') doMembershipCheck(); });
 
 async function doMembershipCheck() {
-  const email = $('#myEmail').value.trim().toLowerCase();
+  let email = $('#myEmail').value.trim().toLowerCase();
   const box = $('#myResult');
   if (!/^\S+@\S+\.\S+$/.test(email)) return toast('Enter a valid email', 'error');
+  email = email.toLowerCase();
   box.innerHTML = '<div class="skeleton" style="min-height:70px;margin-bottom:20px"></div>';
   try {
     const groups = await api('/api/groups');
-    const mine = groups.filter((g) => g.myEmailMatches === undefined || g.memberCount); // all groups come back without emails; match locally by bookmark
-    const bookmarkedIds = bookmarks().filter((b) => b.email === email).map((b) => b.id);
+    // Memberships are matched locally via device bookmarks, since the API
+    // strips member emails in list responses for privacy.
+    const bookmarkedIds = bookmarks().filter((b) => String(b.email).toLowerCase() === email).map((b) => b.id);
     const joined = groups.filter((g) => bookmarkedIds.includes(g.id));
     if (!joined.length) {
       box.innerHTML = `<div class="empty-state" style="margin-bottom:20px">

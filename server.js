@@ -149,14 +149,17 @@ app.post('/api/groups', (req, res) => {
   const subject = SUBJECTS.find((s) => s.id === b.subject);
   if (!subject) return res.status(400).json({ error: 'Unknown subject' });
 
+  if (!String(b.creatorName || '').trim()) return res.status(400).json({ error: 'Creator name is required' });
+  if (!emailOk(b.creatorEmail)) return res.status(400).json({ error: 'A valid creator email is required' });
+
   const maxMembers = b.maxMembers !== undefined && b.maxMembers !== null && Number.isFinite(Number(b.maxMembers))
     ? Math.min(50, Math.max(2, Math.round(Number(b.maxMembers))))
     : 10;
 
   const creator = {
     id: 1,
-    name: String(b.creatorName || '').trim() || 'Group Creator',
-    email: String(b.creatorEmail || '').trim(),
+    name: String(b.creatorName).trim(),
+    email: String(b.creatorEmail).trim().toLowerCase(),
     role: 'Lead',
     joinedAt: new Date().toISOString(),
   };
