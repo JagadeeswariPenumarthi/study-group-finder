@@ -286,15 +286,11 @@ app.get('/api/stats', (_req, res) => {
   res.json({ totalGroups, totalMembers, openGroups, fullGroups, totalStudents, subjects, bySubject });
 });
 
-// SPA fallback (keep JSON 404s for unknown API routes)
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'Not found' });
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Start the server when run directly (local dev / npm start).
-// On serverless platforms (Vercel), the app is exported and invoked by
-// the platform via api/index.js instead.
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`📚 Study Group Finder running at http://localhost:${PORT}`);
