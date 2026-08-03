@@ -1,33 +1,28 @@
-HELP.md
-target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+# Dependencies
+node_modules/
 
-### STS ###
-.apt_generated
+# Local data & logs (never commit user data)
+data/
+*.log
+server.log
+
+# Vercel
+.vercel/
+
+# Freebuff desktop tooling (local only)
+.freebuff/
+
+# Env & OS
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# Java/Spring leftovers (removed from this repo)
+target/
+.idea/
+*.iml
+*.iws
 .classpath
-.factorypath
 .project
 .settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
-.vscode/

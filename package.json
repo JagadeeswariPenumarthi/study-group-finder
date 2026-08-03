@@ -1,0 +1,16 @@
+{
+  "name": "study-group-finder",
+  "version": "1.0.0",
+  "description": "Peer study group finder — find, create and join study groups with Node.js, Express.js, HTML, CSS and vanilla JS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
