@@ -14,35 +14,6 @@ This replaces the previous Spring Boot version of this repository.
 - 📊 Group detail modal with member roster and Lead/Member roles
 - 🧮 Admin-style stats endpoint (`/api/stats`) for dashboards
 - 📱 Fully responsive UI
-
-## Run locally
-
-```bash
-npm install
-npm start
-```
-
-Open http://localhost:3000 (or the `PORT` env var if set).
-
-- Groups and students are stored in `data/study-groups.json` (gitignored).
-- `npm run dev` is an alias for `npm start`.
-
-## Deploy to Vercel
-
-The repo is Vercel-ready (see `vercel.json` + `api/index.js`):
-
-1. Push to GitHub, then go to **https://vercel.com/new** and **Import** the repository.
-2. Vercel auto-detects **Express** (Framework: *Other*). Leave Build Command / Output Directory empty.
-3. Click **Deploy** — every future push auto-redeploys.
-
-**Via CLI:**
-```bash
-npm i -g vercel
-vercel --prod
-```
-
-> **Note on data:** Vercel serverless functions have a read-only filesystem (except ephemeral `/tmp`). The app detects this and runs with in-memory storage — it fully works, but groups reset on cold starts. For durable data, add a free database (Neon / MongoDB Atlas) — the Express layer is ready to be pointed at one.
-
 ## API reference
 
 | Method | Endpoint | Description |
